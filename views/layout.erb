@@ -2,170 +2,85 @@
   <head>
     <title>I18n Yaml Editor</title>
     <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAMAAAC8EZcfAAACLlBMVEX///8CFn8BLngAAAAABQIRJJgdTIQAE3UADWMAAAUAFxYAAAQAEhMAHnQAKpQAAAAGPZ0HPJUGO5AfTakGOowHPZsBJXsBI28BJHYBJXwBJX4AZzcAJXgHOoIHOZIBI3ECJX8DJ4wDKZYDKpwoQMUDKJkBJ48GOJAPUp0DJHcFJ4sGKpwGLakGL7MROb0SgT0Ugz4FG68FGqUDI50HPZwIKpAJLqQKMbUKM8MKNc8nnUQupkYrokgJIsQIH7UGGqIVSKUPMqUPNboPOMwPLNgpP+o0u0Iwvz4vwD0wvz8iOeMPKM8OJb0LNq8AZzwYK7EXLscWL90VMvAVNv4VQ/8g1Ckf1Sgh0yoYNvgYM+YZMdMVKrsAaDgWhz4zSu0cQf8cV/8bZf8ba/8udPgUiYguXushQPklPuQoPc5DWscLdzsjl0I3tUgjb6IlW/8jbv8ogv8rk/8rkf4NUsMpdf8VlnczTfBAV9sAZzkURacspEUxvj8wUv8taf8wiP89p/9Hv/9Bs/81mP8ygv8H6BYTc5dab+MZiUFHadssxDo7a/82fP89lv9Tvv9u7P9bzv94y1lK5iAB/QATnmwbjUE1sEgvUdtGcf9Af/9Flv9Xt/9yxfzN5WWo4EBk5x4V/gBegfcsWL1hgepTePpNgP9Ljf9RoP+g4k232U2d4S9d7hIO/gBefeBegPBdgv5WiP9Uj/9Wlf9Ne9Bp7BUuzDRegPFegvxdhv9aiP9ch//3mJK5AAAAEHRSTlMAQkICAn6F1dEyMjw68e8KaIdkvgAAAhBJREFUGJXt3Nf7z3UYx3FCRsleWSWZyd5SUokKZURCdnYkO6EIWdkz2avIiv47Z4/Pyffgd/m5XD5dr8fhffJ+nt3XffKuUaOKavIfj3jIvzzgBar62hNIYAITmMAEPkeBtbjPPe5yh3+4zS3+5i8SmMAEJjCB/7/AIusmN7jONa5yhctc4iIXOE9tEpjABCYwgeUO/JNz/MFZznCaU5zkBMc5xlGOkMAEJjCBCSxjYB0Oc4jfOcgB9rOPvfzGHnazi195kQQmMIEJTGB5Aneyg1/4me1sYys/sYUf2cwmNrKB9SQwgQlMYALLE7iOtfzAGr5nNav4jpWsYDnLWMoSFpPABCYwgQksT+C3LGIhC5jPPOYyh2+YzSyKBTeTrytIYAITmMAElidwBl8xnWl8yVSmMJlJfMHnTGQCRdZ4EpjABCYwgeUJ/IxP+YRxjOVjxvARH/IBo3mfURSB75HABCYwgQksT2Bd3mUk7zCC4RQn0DCGMoTBDGIgRWA9EpjABCYwgeUJLAygP/3oSx968za9eIue9KA73aiYlcAEJjCBCSxNYH260oU3KVZTZ96gE6/zGh3pQAMSmMAEJjCB5Q4svER72tGWV2lDa1rRkha8TJWzEpjABCYwgaUJrKQhzWlGU5rQmFd4SjEJTGACE5jAEgZWUnwl1ohi9oxjKklgdSWwuhJYXQmsrmcR+BjUxljOlxq/tAAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon" />
-    <style>
-      /* GENERAL */
-      body {
-        font-family: sans-serif;
-        font-size: 0.7em;
-        margin: 0;
-        margin-top: 60px;
-      }
 
-      /* HEADER */
-      .header {
-        min-width: 946px;
-        margin: 0;
-        padding: 1em;
-        background-color: #fff;
-        z-index: 999 !important;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        -webkit-box-shadow: 0 8px 6px -6px #ccc;
-        	   -moz-box-shadow: 0 8px 6px -6px #ccc;
-        	        box-shadow: 0 8px 6px -6px #ccc;
-      }
-
-      .header h1, .header form {
-        display: inline;
-        vertical-align: middle;
-      }
-
-      .header h1 {
-        margin-right: 2em;
-      }
-
-      .pull-right {
-        float:right;
-        padding-right:20px;
-      }
-
-      /* STATS */
-      .content > .stats {
-        padding-left: 0.5em;
-        font-size: 1.2em;
-        border-bottom: 1px solid #bbb;
-      }
-
-      .content > .stats > span {
-        display: inline-block;
-        margin-bottom: 0.5em;
-      }
-
-      .content > .stats > .done {
-        border-bottom: 2px solid #3f3;
-      }
-
-      .content > .stats > .incomplete {
-        border-bottom: 2px solid #f33;
-      }
-
-      .content > .stats > .empty {
-        border-bottom: 2px solid #33f;
-      }
-
-      /* TRANSLATIONS */
-      table.keys {
-        width: 100%;
-      }
-
-      table.keys .key {
-        padding-left: 0.5em;
-      }
-
-      table.keys tr.translation > td {
-        border-bottom: 1px solid #bbb;
-      }
-
-      table.keys tr.translation.incomplete .key .text {
-        border-bottom: 3px solid #f33;
-      }
-
-      table.keys tr.translation.empty .key .text {
-        border-bottom: 3px solid #33f;
-      }
-
-      table.keys td.key {
-        width: 300px;
-      }
-
-      table.locales td.value input {
-        width: 600px;
-      }
-
-      table.locales td.value input[type=radio] {
-        width: 20px;
-      }
-
-      table.locales td.value label {
-        margin-right: 20px;
-      }
-
-      /* CATEGORIES */
-
-      table.categories {
-        width: 100%;
-      }
-
-      table.categories .key {
-        padding-left: 0.5em;
-      }
-
-      table.categories tr.category a {
-        text-decoration: none;
-      }
-
-      table.categories tr.category > td {
-        border-bottom: 1px solid #bbb;
-      }
-
-      table.categories tr.category > td {
-        padding-top: 1em;
-        padding-bottom: 1em;
-      }
-
-      table.categories tr.category.incomplete .key .text {
-        border-bottom: 3px solid #f33;
-      }
+    <style type="text/css">
+      <% path1 = File.expand_path("bootstrap_3_3_7_min_css.erb","#{File.dirname(__FILE__)}/assets/stylesheets/") %>
+      <% path2 = File.expand_path("custom_css.erb","#{File.dirname(__FILE__)}/assets/stylesheets/") %>
+      <%= File.read(path1) %>
+      <%= File.read(path2) %>
     </style>
+    <% path3 = File.expand_path("jquery_min_js.erb","#{File.dirname(__FILE__)}/assets/javascripts/") %>
+    <% path4 = File.expand_path("bootstrap_3_3_7_min_js.erb","#{File.dirname(__FILE__)}/assets/javascripts/") %>
+    <% jquery =  File.read(path3)%>
+    <% bootstrap =  File.read(path4)%>
+    <script><%= jquery %></script>
+    <script><%= bootstrap %></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
   </head>
 
   <body>
-    <div class="header">
-      <h1>I18n Yaml Editor</h1>
+    <nav class="nav navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <h1 class="navbar-brand brand-name" style="float:left">I18n Yaml Editor</h1>
+          <div class="form-group navbar-form navbar-left pull-right filters-button">
+            <div id="save-on-top-container" class="pull-right">
+              <!-- <button class="btn btn-default pull-right outline-green" type="button">
+                Save
+              </button> -->
+            </div>
+            <button class="btn btn-default pull-right margin-right-5" type="button" data-toggle="collapse" data-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
+              Filters
+            </button>
+          </div>
+          <div class="collapse" id="filtersCollapse">
+            <form class="navbar-form navbar-left pull-right clear-form" action="/" method="get">
+              <div class="form-group clear-button">
+                <button type="submit" class="btn btn-default outline-orange margin-right-5" value="Clear">Clear</button>
+              </div>
+            </form>
+      
+            <form class="navbar-form navbar-left pull-right filter-form" action="/" method="get">
+              <div class="form-group">
+                <label class="input-label">
+                  <input class="form-control" name="filters[key]" type="text" value="<%= filters["key"] %>" placeholder="Key:"/>
+                </label>
+              </div>
+              <div class="form-group">
+                <label class="input-label">
+                  <input class="form-control" name="filters[text]" type="text" value="<%= filters["text"] %>" placeholder="Text:"/>
+                </label>
+              </div>
+              <div class="form-group custom-control custom-checkbox">
+                <input class="custom-control-input" id="incomplete" name="filters[incomplete]" type="checkbox" <%= "checked=checked" if filters["incomplete"] == "on" %>/>
+                <label class="custom-control-label box" for="incomplete"></label>
+                <label class="custom-control-label text" for="incomplete">Incomplete</label>
+                <input class="custom-control-input" id="empty" name="filters[empty]" type="checkbox"  <%= "checked=checked" if filters["empty"] == "on" %>/>
+                <label class="custom-control-label box" for="empty"></label>
+                <label class="custom-control-label text" for="empty">Empty</label>
+              </div>
+              <div class="form-group submit-button">
+                <button type="submit" class="btn btn-default" value="Filter">Submit</button>
+              </div>
+            </form>
+      
+          </div>
+          
+        </div>
+      </div>
+    </nav>
 
-      <form action="/" method="get">
-        <label>
-          Key:
-          <input name="filters[key]" type="text" value="<%= filters["key"] %>" />
-        </label>
-
-        <label>
-          Text:
-          <input name="filters[text]" type="text" value="<%= filters["text"] %>" />
-        </label>
-
-        <label>
-          <input name="filters[incomplete]" type="checkbox" <%= "checked=checked" if filters["incomplete"] == "on" %> />
-          Incomplete
-        </label>
-        <label>
-          <input name="filters[empty]" type="checkbox" <%= "checked=checked" if filters["empty"] == "on" %> />
-          Empty
-        </label>
-
-        <input type="submit" value="Filter" />
-      </form>
-
-      <form action="/" method="get">
-        <input type="submit" value="Clear" />
-      </form>
-
-      <div id="save-on-top-container" class="pull-right"></div>
-    </div>
-
-    <div class="content">
+    <div class="content  container-fluid">
       <%= content %>
     </div>
   </body>
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(e) {
+     var h = $('nav').height() + 20;
+     $('body').animate({ paddingTop: h });
+  });
+</script>

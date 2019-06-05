@@ -2,13 +2,13 @@
 
 Gem::Specification.new do |s|
   s.name     = 'i18n_yaml_editor'
-  s.version  = '2.1.0'
+  s.version  = '2.2.0'
   s.date     = '2018-05-04'
   s.summary  = 'I18n Yaml Editor'
-  s.email    = 'wolfgang.teuber@sage.com'
+  s.email    = 'wolfgang.teuber@sage.com, marc@marcpursals.com'
   s.homepage = 'http://github.com/Sage/i18n_yaml_editor'
   s.description = 'I18n Yaml Editor'
-  s.authors = ['Harry Vangberg', 'Wolfgang Teuber']
+  s.authors = ['Harry Vangberg', 'Wolfgang Teuber', 'Marc Pursals']
   s.executables << 'i18n_yaml_editor'
   s.files = %w[
     README.md
@@ -29,6 +29,10 @@ Gem::Specification.new do |s|
     views/debug.html.erb
     views/layout.erb
     views/translations.html.erb
+    views/assets/stylesheets/bootstrap_3_3_7_min_css.erb
+    views/assets/stylesheets/custom_css.erb
+    views/assets/javascripts/jquery_min_js.erb
+    views/assets/javascripts/bootstrap_3_3_7_min_js.erb
   ]
   s.test_files = %w[
     test/test_helper.rb

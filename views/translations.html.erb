@@ -1,62 +1,62 @@
-<div class="stats">
-  stats: {
-  total: <span class=""><%= keys.length %></span>,
-  <span class="done">done: <%= keys.count{|_,key| key.complete? && !key.empty?} %></span>,
-  <span class="incomplete">incomplete: <%= keys.count{|_,key| !key.complete?} %></span>,
-  <span class="empty">empty: <%= keys.count{|_,key| key.empty?} %></span>}
+<div class="row">
+  <div class="col-md-12 col-xs-12 stats-row">
+    <div class="stats">
+      stats: {
+      total: <span class=""><%= keys.length %></span>,
+      <span class="done">done: <%= keys.count{|_,key| key.complete? && !key.empty?} %></span>,
+      <span class="stat-incomplete">incomplete: <%= keys.count{|_,key| !key.complete?} %></span>,
+      <span class="empty">empty: <%= keys.count{|_,key| key.empty?} %></span>}
+    </div>
+  </div>
 </div>
 
-<form id="updateform" action="/update" method="post">
-  <% filters.each do |filter, value| %>
-    <input name="filters[<%= filter %>" type="hidden" value="<%= value %>" class="changed"/>
-  <% end %>
-
-  <table class="keys" cellspacing="0">
-    <% keys.each do |name, key| %>
-      <tr class="translation
-        <%= "incomplete" unless key.complete? %>
-        <%= "empty" if key.empty? %>
-        ">
-        <td class="key">
-          <span class="text"><%= key.name %></span>
-        </td>
-        <td class="translations">
-          <table class="locales">
-            <%
-               data_type = key.translations.map(&:text).find { |t| t.present? || t == false }.class
-               data_type = String if data_type == NilClass
-            %>
-            <%
-               key.translations.sort_by(&:locale).each do |translation|
-                 translation.text = [] if data_type == Array && translation.text.blank?
-                 klasses = translation.text.map(&:class).uniq if data_type == Array
-            %>
-              <tr>
-                <td class="locale"><%= translation.locale %>:</td>
-                <td class="value">
-                  <% if data_type == String || data_type < Numeric %>
-                    <input type="text" name="translations[<%= translation.name %>]" value="<%= Rack::Utils.escape_html translation.text %>" />
-                  <% elsif [TrueClass, FalseClass].include?(data_type) %>
-                    <input type="radio" name="translations[<%= translation.name %>]" value="true" <%= 'checked' if translation.text == true %>/><label> True</label>
-                    <input type="radio" name="translations[<%= translation.name %>]" value="false" <%= 'checked' if translation.text == false %>/><label> False</label>
-                  <% elsif data_type == Array && (klasses.all? { |klass| klass == String } || klasses.all? { |klass| klass < Numeric}) %>
-                    <textarea name="translations[<%= translation.name %>]" cols="35" rows="<%= translation.text.count %>"><%= translation.text.join("\n") %></textarea>
-                  <% else %>
-                    [read only]
-                    <%= translation.text.class.name %>
-                    <%= Rack::Utils.escape_html translation.text.inspect %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </table>
-        </td>
-      </tr>
+<div class="row">
+  <form id="updateform" action="/update" method="post">
+    <% filters.each do |filter, value| %>
+      <input name="filters[<%= filter %>" type="hidden" value="<%= value %>" class="changed"/>
     <% end %>
-  </table>
 
-  <p class="pull-right"><input type="submit" id="save" value="Save" /></p>
-</form>
+    <% keys.each do |name, key| %>
+      <%
+        data_type = key.translations.map(&:text).find { |t| t.present? || t == false }.class
+        data_type = String if data_type == NilClass
+      %>
+      <div class="col-md-6 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading <%= "translate-incomplete" unless key.complete? %> <%= "translate-empty" if key.empty? %>"><%= key.name %></div>
+          <div class="panel-body">
+            <%
+              key.translations.sort_by(&:locale).each do |translation|
+                translation.text = [] if data_type == Array && translation.text.blank?
+                klasses = translation.text.map(&:class).uniq if data_type == Array
+            %>
+              <p class="locale-input-wraper">
+                <b class="locale-names"><%= translation.locale %>:</b>
+                <% if data_type == String || data_type < Numeric %>
+                  <input  class="form-control" type="text" name="translations[<%= translation.name %>]" value="<%= Rack::Utils.escape_html translation.text %>" />
+                <% elsif [TrueClass, FalseClass].include?(data_type) %>
+                  <input class="form-control" type="radio" name="translations[<%= translation.name %>]" value="true" <%= 'checked' if translation.text == true %>/><label> True</label>
+                  <input class="form-control" type="radio" name="translations[<%= translation.name %>]" value="false" <%= 'checked' if translation.text == false %>/><label> False</label>
+                <% elsif data_type == Array && (klasses.all? { |klass| klass == String } || klasses.all? { |klass| klass < Numeric}) %>
+                  <textarea class="form-control" name="translations[<%= translation.name %>]" cols="35" rows="<%= translation.text.count %>"><%= translation.text.join("\n") %></textarea>
+                <% else %>
+                  [read only]
+                  <%= translation.text.class.name %>
+                  <%= Rack::Utils.escape_html translation.text.inspect %>
+                <% end %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </form>
+</div>
+
+
+
+
+
 <script>
   var updateForm = document.getElementById('updateform'),
       saveOnTop = document.createElement('button'),
@@ -75,6 +75,7 @@
       };
 
   saveOnTop.innerHTML = 'Save';
+  $(saveOnTop).addClass("btn btn-default pull-right outline-green");
   saveOnTop.onclick = function () { updateForm.onsubmit();};
   document.getElementById('save-on-top-container').appendChild(saveOnTop);
 
