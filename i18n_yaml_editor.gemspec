@@ -5,10 +5,10 @@ Gem::Specification.new do |s|
   s.version  = '2.1.0'
   s.date     = '2018-05-04'
   s.summary  = 'I18n Yaml Editor'
-  s.email    = 'wolfgang.teuber@sage.com'
+  s.email    = 'miquel.oliete@sage.com'
   s.homepage = 'http://github.com/Sage/i18n_yaml_editor'
   s.description = 'I18n Yaml Editor'
-  s.authors = ['Harry Vangberg', 'Wolfgang Teuber']
+  s.authors = ['Harry Vangberg', 'Wolfgang Teuber', 'Miquel Oliete']
   s.executables << 'i18n_yaml_editor'
   s.files = %w[
     README.md
