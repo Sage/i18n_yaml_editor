@@ -86,19 +86,9 @@ module I18nYamlEditor
     def files(translations: {})
       store.to_yaml.select do |_, i18n_hash|
         translations.keys.any? do |i18n_key|
-          key_in_i18n_hash? i18n_key, i18n_hash
+          i18n_hash.dig(*i18n_key.split('.'))
         end
       end
-    end
-
-    def key_in_i18n_hash?(i18n_key, i18n_hash)
-      !i18n_key.split('.').inject(i18n_hash) do |hash, k|
-        begin
-          hash[k]
-        rescue StandardError
-          {}
-        end
-      end.nil?
     end
   end
 end
