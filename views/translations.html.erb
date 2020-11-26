@@ -23,8 +23,10 @@
         <td class="translations">
           <table class="locales">
             <%
-               data_type = key.translations.map(&:text).find { |t| t.present? || t == false }.class
+               translation_texts = key.translations.map(&:text)
+               data_type = translation_texts.find { |t| t.present? || t == false }.class
                data_type = String if data_type == NilClass
+               needs_text_area = (data_type == String && translation_texts.any? { |t| t.is_a?(String) && t.include?("\n") })
             %>
             <%
                key.translations.sort_by(&:locale).each do |translation|
@@ -35,12 +37,16 @@
                 <td class="locale"><%= translation.locale %>:</td>
                 <td class="value">
                   <% if data_type == String || data_type < Numeric %>
-                    <input type="text" name="translations[<%= translation.name %>]" value="<%= Rack::Utils.escape_html translation.text %>" />
+                    <% if needs_text_area %>
+                      <textarea name="translations[<%= translation.name %>]" cols="80" rows="<%= translation.text&.lines&.count || 1 %>"><%= Rack::Utils.escape_html translation.text %></textarea>
+                    <% else %>
+                      <input type="text" name="translations[<%= translation.name %>]" value="<%= Rack::Utils.escape_html translation.text %>" />
+                    <% end %>
                   <% elsif [TrueClass, FalseClass].include?(data_type) %>
                     <input type="radio" name="translations[<%= translation.name %>]" value="true" <%= 'checked' if translation.text == true %>/><label> True</label>
                     <input type="radio" name="translations[<%= translation.name %>]" value="false" <%= 'checked' if translation.text == false %>/><label> False</label>
                   <% elsif data_type == Array && (klasses.all? { |klass| klass == String } || klasses.all? { |klass| klass < Numeric}) %>
-                    <textarea name="translations[<%= translation.name %>]" cols="35" rows="<%= translation.text.count %>"><%= translation.text.join("\n") %></textarea>
+                    <textarea name="translations[<%= translation.name %>]" cols="35" rows="<%= translation.text.count %>"><%= Rack::Utils.escape_html translation.text.join("\n") %></textarea>
                   <% else %>
                     [read only]
                     <%= translation.text.class.name %>

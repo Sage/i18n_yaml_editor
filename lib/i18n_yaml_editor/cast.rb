@@ -28,7 +28,9 @@ module I18nYamlEditor
       TYPES.each do |type|
         return CONVERT[type].call(value) if CHECK[type].call(klass)
       end
-      value.to_s # String, blank
+      # String, blank
+      # remove carriage returns injected by textarea fields
+      value.to_s.tr("\r", '')
     end
   end
 end
